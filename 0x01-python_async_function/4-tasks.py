@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
-"""Python and Async task await random"""
-import asyncio
-from typing import List
+"""module docs"""
 
+from typing import List
 task_wait_random = __import__('3-tasks').task_wait_random
 
 
-async def task_wait_n(n: int, max_delay: int) -> List[float]:
-    """returns list of delayed async tasks"""
-    tasks = [task_wait_random(max_delay) for _ in range(n)]
-    delayed_tasks = [await task for task in asyncio.as_completed(tasks)]
-    return delayed_tasks
+async def task_wait_n(n: int, max_delay: int = 10) -> List[float]:
+    """function docs"""
+    spawn_ls = []
+    delay_ls = []
+    for i in range(n):
+        delayed_task = task_wait_random(max_delay)
+        delayed_task.add_done_callback(lambda x: delay_ls.append(x.result()))
+        spawn_ls.append(delayed_task)
+
+    for spawn in spawn_ls:
+        await spawn
+
+    return delay_ls
