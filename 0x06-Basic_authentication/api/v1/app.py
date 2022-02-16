@@ -20,11 +20,21 @@ def not_found(error) -> str:
     """
     return jsonify({"error": "Not found"}), 404
 
+
 @app.errorhandler(401)
 def unauthorized(error) -> str:
     """ Request unauthorized
     """
     return jsonify({"error": "Unauthorized"}), 401
+
+
+@app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
+def unauthorized() -> str:
+    """ GET /api/v1/unauthorized
+    Return:
+      - error handler for 401
+    """
+    abort(401)
 
 
 if __name__ == "__main__":
