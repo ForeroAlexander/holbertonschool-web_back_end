@@ -52,7 +52,7 @@ class BasicAuth(Auth):
                     return u
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """Overload Auth and retrieve the User instance for a request
+        """Overload Auth and retrieve the User instance for a reqest
         """
         header = self.authorization_header(request)
         b64 = self.extract_base64_authorization_header(header)
